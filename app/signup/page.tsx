@@ -4,12 +4,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import style from "../page.module.css";
+import { signUp } from "../../firebase/auth";
 
 export default function MakeAccount() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const handleForm = async (event: any) => {};
+  const handleForm = async (event: any) => {
+    event.preventDefault();
+    const { result, error } = await signUp(email, password);
+    if (error) {
+      return console.log(error);
+    }
+    // else successful
+    console.log(result);
+  };
 
   return (
     <div className={style.pageWrapper}>
@@ -20,8 +29,7 @@ export default function MakeAccount() {
             "https://i.gifer.com/origin/9d/9dda8ac634238f7be1cc842b5a1aaf98.gif"
           }
         />
-        <br />
-        <br />
+        <br /><br/>
         <h2>Signup Page</h2>
         <Form onSubmit={handleForm}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
